@@ -1,35 +1,52 @@
 package com.baharudin.enamduatest.presentation.business_detail.adapter
 
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
+import com.baharudin.enamduatest.R
 import com.baharudin.enamduatest.databinding.ItemSliderBinding
 import com.baharudin.enamduatest.domain.model.business_detail.BusinesssDetailModel
 import com.bumptech.glide.Glide
 
 class ImageSliderAdapter(
-    private val items : MutableList<BusinesssDetailModel>
-) : RecyclerView.Adapter<ImageSliderAdapter.ImageViewHolder>() {
+    private val context : Context,
+    private val imageList : List<String?>
+) : PagerAdapter() {
 
-    inner class ImageViewHolder(itemView : ItemSliderBinding) : RecyclerView.ViewHolder(itemView.root){
-        private val binding = itemView
-        fun bindItem(data : BusinesssDetailModel){
-            with(binding){
-                Glide.with(itemView)
-                    .load(data.photos)
-                    .into(ivSlider)
-            }
+    override fun getCount(): Int {
+        return imageList.size
+    }
+
+    override fun isViewFromObject(view: View, `object`: Any): Boolean {
+        return view === `object`
+    }
+
+    override fun instantiateItem(container: ViewGroup, position: Int): Any {
+        val view: View =  (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
+            R.layout.item_slider, null)
+        val ivImages = view.findViewById<ImageView>(R.id.iv_slider)
+
+        imageList[position].let {
+            Glide.with(context)
+                .load(it)
+                .into(ivImages);
         }
+
+        val viewPager = container as ViewPager
+        viewPager.addView(view, 0)
+        return view
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
-        val inflater = ItemSliderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ImageViewHolder(inflater)
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        val viewPager = container as ViewPager
+        val view = `object` as View
+        viewPager.removeView(view)
     }
 
-    override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        holder.bindItem(items[position])
-    }
-
-    override fun getItemCount(): Int = items.size
 }

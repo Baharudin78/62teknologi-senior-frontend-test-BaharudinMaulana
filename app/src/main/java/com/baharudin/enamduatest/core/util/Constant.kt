@@ -5,5 +5,7 @@ object Constant {
     const val TOKEN_TYPE = "Bearer"
     const val BASE_URL = "https://api.yelp.com/"
     const val BASE_LOCATION = "New York City"
-    const val LIMIT = 20
+    const val LIMIT = 50
+    const val REVIEW_SORT_BY = "newest"
+    const val SEARCH_TIME_DELAY = 500L
 }

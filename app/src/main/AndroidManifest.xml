@@ -19,6 +19,9 @@
         android:theme="@style/Theme.EnamDuaTest"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.business_search.SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.business_detail.BusinessDetailActivity"
             android:exported="false" />
         <activity

@@ -2,6 +2,7 @@ package com.baharudin.enamduatest.data.remote
 
 import com.baharudin.enamduatest.core.util.Constant.BASE_LOCATION
 import com.baharudin.enamduatest.core.util.Constant.LIMIT
+import com.baharudin.enamduatest.core.util.Constant.REVIEW_SORT_BY
 import com.baharudin.enamduatest.data.dto.business.BusinessesDto
 import com.baharudin.enamduatest.data.dto.business_detail.BusinessDetailDto
 import com.baharudin.enamduatest.data.dto.review.ReviewDto
@@ -36,8 +37,10 @@ interface BusinessesApi {
         @Path("business_id_or_alias") id : String
     ) : BusinessDetailDto
 
-    @GET("v3/businesses/{id}/review")
+    @GET("v3/businesses/{id}/reviews")
     suspend fun getReviewBusiness(
-        @Path("id") id : String
+        @Path("id") id : String,
+        @Query("limit") limit: Int = LIMIT,
+        @Query("sort_by") sortBy : String = REVIEW_SORT_BY
     ) : ReviewDto
 }

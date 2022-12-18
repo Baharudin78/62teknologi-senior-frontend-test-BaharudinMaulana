@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.baharudin.enamduatest.core.util.Resource
 import com.baharudin.enamduatest.domain.model.business_detail.BusinesssDetailModel
+import com.baharudin.enamduatest.domain.model.review.ReviewModel
 import com.baharudin.enamduatest.domain.use_case.BusinessUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -20,6 +21,9 @@ class BusinessDetailViewModel @Inject constructor(
 
     private val _business = MutableStateFlow<BusinesssDetailModel?>(null)
     val business : StateFlow<BusinesssDetailModel?> get() = _business
+
+    private val _review = MutableStateFlow<List<ReviewModel>>(mutableListOf())
+    val review : StateFlow<List<ReviewModel>> get() = _review
 
     private fun setLoading(){
         _state.value = DetailBusinessState.IsLoading(true)
@@ -48,6 +52,31 @@ class BusinessDetailViewModel @Inject constructor(
                     when(result){
                         is Resource.Success -> {
                             _business.value = result.data
+                        }
+                        is Resource.Error -> {
+                            showToast(result.message.orEmpty())
+                        }
+                        else -> {}
+                    }
+                }
+        }
+    }
+
+    fun getReview(id : String) {
+        viewModelScope.launch {
+            businessUseCase.getBusinessReview.invoke(id)
+                .onStart {
+                    setLoading()
+                }
+                .catch { exception->
+                    hideLoading()
+                    showToast(exception.message.orEmpty())
+                }
+                .collect{ result ->
+                    hideLoading()
+                    when(result) {
+                        is Resource.Success -> {
+                            _review.value = result.data!!
                         }
                         is Resource.Error -> {
                             showToast(result.message.orEmpty())

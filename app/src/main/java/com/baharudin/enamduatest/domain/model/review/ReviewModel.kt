@@ -6,10 +6,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ReviewModel(
-    val id: String,
-    val rating: Int,
-    val text: String,
-    val time_created: String,
-    val url: String,
+    val id: String? = null,
+    val rating: Int? = null,
+    val text: String? = null,
+    val time_created: String? = null,
+    val url: String? = null,
     val user: UserModel
 ) : Parcelable

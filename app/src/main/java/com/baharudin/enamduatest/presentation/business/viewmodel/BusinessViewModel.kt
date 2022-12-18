@@ -74,10 +74,9 @@ class BusinessViewModel @Inject constructor(
             _isRefresh.emit(false)
         }
     }
-
-    sealed class BusinessViewState {
-        object Init : BusinessViewState()
-        data class IsLoading(val isLoading: Boolean) : BusinessViewState()
-        data class ShowToast(val message : String) : BusinessViewState()
-    }
+}
+sealed class BusinessViewState {
+    object Init : BusinessViewState()
+    data class IsLoading(val isLoading: Boolean) : BusinessViewState()
+    data class ShowToast(val message : String) : BusinessViewState()
 }

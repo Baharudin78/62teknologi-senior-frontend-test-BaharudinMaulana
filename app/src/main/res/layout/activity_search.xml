@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.business.MainActivity">
+    tools:context=".presentation.business_search.SearchActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_search"
@@ -36,8 +36,6 @@
                 android:background="@color/color_bg_gray_activity"
                 android:gravity="center_vertical"
                 android:hint="Search"
-                android:clickable="true"
-                android:focusable="false"
                 android:importantForAutofill="no"
                 android:inputType="text"
                 android:paddingHorizontal="16dp"
@@ -81,6 +79,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

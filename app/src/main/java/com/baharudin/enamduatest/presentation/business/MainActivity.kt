@@ -12,7 +12,10 @@ import com.baharudin.enamduatest.databinding.ActivityMainBinding
 import com.baharudin.enamduatest.domain.model.business.BusinessesModel
 import com.baharudin.enamduatest.presentation.business.adapter.BusinessAdapter
 import com.baharudin.enamduatest.presentation.business.viewmodel.BusinessViewModel
+import com.baharudin.enamduatest.presentation.business.viewmodel.BusinessViewState
 import com.baharudin.enamduatest.presentation.business_detail.BusinessDetailActivity
+import com.baharudin.enamduatest.presentation.business_detail.adapter.ReviewAdapter
+import com.baharudin.enamduatest.presentation.business_search.SearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -31,6 +34,14 @@ class MainActivity : AppCompatActivity() {
         setupRecycleview()
         fetchBusiness()
         observer()
+        setListener()
+    }
+
+    private fun setListener(){
+        binding.etSearch.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setupRecycleview(){
@@ -47,6 +58,7 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
     }
+
 
     private fun fetchBusiness(){
         viewModel.getBusiness()
@@ -83,11 +95,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleState(state : BusinessViewModel.BusinessViewState){
+    private fun handleState(state : BusinessViewState){
         when(state){
-            is BusinessViewModel.BusinessViewState.IsLoading -> handleLoading(state.isLoading)
-            is BusinessViewModel.BusinessViewState.ShowToast -> this.showToast(state.message)
-            is BusinessViewModel.BusinessViewState.Init -> Unit
+            is BusinessViewState.IsLoading -> handleLoading(state.isLoading)
+            is BusinessViewState.ShowToast -> this.showToast(state.message)
+            is BusinessViewState.Init -> Unit
+            else ->{}
         }
     }
 
@@ -98,6 +111,4 @@ class MainActivity : AppCompatActivity() {
             binding.progressBar.visibility = View.GONE
         }
     }
-
-    
 }
