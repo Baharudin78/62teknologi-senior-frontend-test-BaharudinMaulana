@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_gray"
     tools:context=".presentation.business.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +19,7 @@
         android:layout_marginVertical="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="86dp"
-        android:background="@color/gray"
+        android:background="@color/white"
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +29,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/color_bg_gray_activity"
+            android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -37,7 +38,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/color_bg_gray_activity"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:hint="Search"
                 android:clickable="true"
@@ -171,7 +172,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="58dp"
                     android:layout_marginTop="16dp"
-                    android:text="Bayar"
+                    android:text="Filter"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/colorPrimary"

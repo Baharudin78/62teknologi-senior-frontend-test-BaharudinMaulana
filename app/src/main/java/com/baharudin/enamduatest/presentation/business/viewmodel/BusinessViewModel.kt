@@ -51,12 +51,13 @@ class BusinessViewModel @Inject constructor(
                     showToast(exception.message.orEmpty())
                 }
                 .collect{result ->
-                    hideLoading()
                     when(result){
                         is Resource.Success ->{
+                            hideLoading()
                             _business.value = result.data ?: emptyList()
                         }
                         is Resource.Error -> {
+                            hideLoading()
                             showToast(result.message.orEmpty())
                         }
                         else -> {

@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/bg_bottom_sheet.xml" value="0.111" />
+        <entry key="app/src/main/res/drawable/bg_chips.xml" value="0.111" />
         <entry key="app/src/main/res/drawable/item_business.xml" value="0.111" />
         <entry key="app/src/main/res/layout/activity_business_detail.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />

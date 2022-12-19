@@ -1,12 +1,13 @@
 package com.baharudin.enamduatest.presentation.business
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.baharudin.enamduatest.core.util.showToast
 import com.baharudin.enamduatest.databinding.ActivityMainBinding
@@ -17,7 +18,6 @@ import com.baharudin.enamduatest.presentation.business.adapter.FilterAdapter
 import com.baharudin.enamduatest.presentation.business.viewmodel.BusinessViewModel
 import com.baharudin.enamduatest.presentation.business.viewmodel.BusinessViewState
 import com.baharudin.enamduatest.presentation.business_detail.BusinessDetailActivity
-import com.baharudin.enamduatest.presentation.business_detail.adapter.ReviewAdapter
 import com.baharudin.enamduatest.presentation.business_search.SearchActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
@@ -85,12 +85,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun initBottomSheet(){
-            BottomSheetBehavior.from(binding.containerBottomSheet).apply {
-                peekHeight = 185
-                this.state = BottomSheetBehavior.STATE_EXPANDED
-            }
+        BottomSheetBehavior.from(binding.containerBottomSheet).apply {
+            peekHeight = 185
+            this.state = BottomSheetBehavior.STATE_EXPANDED
+        }
     }
 
     private fun fetchBusiness(){
@@ -133,7 +132,6 @@ class MainActivity : AppCompatActivity() {
             is BusinessViewState.IsLoading -> handleLoading(state.isLoading)
             is BusinessViewState.ShowToast -> this.showToast(state.message)
             is BusinessViewState.Init -> Unit
-            else ->{}
         }
     }
 

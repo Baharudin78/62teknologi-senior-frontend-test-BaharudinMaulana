@@ -11,5 +11,7 @@
     <color name="colorPrimary">#0093dd</color>
     <color name="color_bg_gray_activity">#F8F6F6</color>
     <color name="color_gray_mitrarenov">#818181</color>
+    <color name="background_gray">#F9F9F9</color>
+
 
 </resources>
