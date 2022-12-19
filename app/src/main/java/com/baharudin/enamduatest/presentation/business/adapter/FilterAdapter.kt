@@ -33,7 +33,7 @@ class FilterAdapter(
                 binding.card.background =
                     ContextCompat.getDrawable(
                         itemView.context,
-                        R.color.gray
+                        R.drawable.bg_border
                     )
             }
             binding.root.setOnClickListener {
