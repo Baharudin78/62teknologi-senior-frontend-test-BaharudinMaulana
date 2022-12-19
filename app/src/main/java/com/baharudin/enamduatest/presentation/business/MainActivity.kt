@@ -4,18 +4,22 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.baharudin.enamduatest.core.util.showToast
 import com.baharudin.enamduatest.databinding.ActivityMainBinding
+import com.baharudin.enamduatest.domain.model.FilterModel
 import com.baharudin.enamduatest.domain.model.business.BusinessesModel
 import com.baharudin.enamduatest.presentation.business.adapter.BusinessAdapter
+import com.baharudin.enamduatest.presentation.business.adapter.FilterAdapter
 import com.baharudin.enamduatest.presentation.business.viewmodel.BusinessViewModel
 import com.baharudin.enamduatest.presentation.business.viewmodel.BusinessViewState
 import com.baharudin.enamduatest.presentation.business_detail.BusinessDetailActivity
 import com.baharudin.enamduatest.presentation.business_detail.adapter.ReviewAdapter
 import com.baharudin.enamduatest.presentation.business_search.SearchActivity
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -25,6 +29,7 @@ import kotlinx.coroutines.flow.onEach
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private val viewModel : BusinessViewModel by viewModels()
+    private var dataList = ArrayList<FilterModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +40,18 @@ class MainActivity : AppCompatActivity() {
         fetchBusiness()
         observer()
         setListener()
+        setupAdapterFilter()
+        setupListFilter()
     }
 
     private fun setListener(){
         binding.etSearch.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
+        }
+        binding.ivFilter.setOnClickListener {
+            binding.containerBottomSheet.visibility = View.VISIBLE
+            initBottomSheet()
         }
     }
 
@@ -59,6 +70,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupAdapterFilter(){
+        val filterAdapter = FilterAdapter(dataList)
+        filterAdapter.setItemClickListener(object : FilterAdapter.OnItemClickListener{
+            override fun onClick(filterModel: FilterModel) {
+                binding.btnFilter.setOnClickListener {
+                    viewModel.getBusinessSortBy(filterModel.title)
+                }
+            }
+        })
+        binding.rvFilter.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = filterAdapter
+        }
+    }
+
+
+    private fun initBottomSheet(){
+            BottomSheetBehavior.from(binding.containerBottomSheet).apply {
+                peekHeight = 185
+                this.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+    }
 
     private fun fetchBusiness(){
         viewModel.getBusiness()
@@ -110,5 +143,28 @@ class MainActivity : AppCompatActivity() {
         }else{
             binding.progressBar.visibility = View.GONE
         }
+    }
+
+    private fun setupListFilter(){
+        dataList.add(
+            FilterModel(
+                "best_match"
+            )
+        )
+        dataList.add(
+            FilterModel(
+                "rating"
+            )
+        )
+        dataList.add(
+            FilterModel(
+                "review_count"
+            )
+        )
+        dataList.add(
+            FilterModel(
+                "distance"
+            )
+        )
     }
 }

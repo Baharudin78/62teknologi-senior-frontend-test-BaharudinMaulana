@@ -67,6 +67,33 @@ class BusinessViewModel @Inject constructor(
         }
     }
 
+    fun getBusinessSortBy(sortBy : String) {
+        viewModelScope.launch {
+            businessUseCase.getBusinessFilter.invoke(sortBy)
+                .onStart {
+                    setLoading()
+                }
+                .catch { exception ->
+                    hideLoading()
+                    showToast(exception.message.orEmpty())
+                }
+                .collect{result ->
+                    hideLoading()
+                    when(result){
+                        is Resource.Success ->{
+                            _business.value = result.data ?: emptyList()
+                        }
+                        is Resource.Error -> {
+                            showToast(result.message.orEmpty())
+                        }
+                        else -> {
+
+                        }
+                    }
+                }
+        }
+    }
+
     fun refresh(){
         viewModelScope.launch {
             _isRefresh.emit(true)
