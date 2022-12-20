@@ -45,6 +45,7 @@ class BusinessDetailActivity : AppCompatActivity() {
         setupAdapterReview()
         observer()
         getDataBusiness()
+        getReview()
 
     }
 
@@ -65,6 +66,10 @@ class BusinessDetailActivity : AppCompatActivity() {
     private fun getDataBusiness() {
         val id = intent.getStringExtra(BUSINESS_ID) ?: ""
         viewModel.getBusinessById(id)
+    }
+
+    private fun getReview(){
+        val id = intent.getStringExtra(BUSINESS_ID) ?: ""
         viewModel.getReview(id)
     }
 
@@ -116,9 +121,8 @@ class BusinessDetailActivity : AppCompatActivity() {
         with(binding){
             tvAlias.text = businessDetail?.alias ?: "Empty"
             tvName.text = businessDetail?.name ?: "Empty"
-            tvPhone.text = businessDetail?.phone ?: "021+++"
+            tvPhone.text = "Phone : ${businessDetail?.phone} " ?: "021+++"
             tvRating.text = businessDetail?.rating.toString() ?: "0"
-            tvCount.text = businessDetail?.review_count.toString()
             businessDetail?.photos.let {
                 viewPagerAdapter = ImageSliderAdapter(this@BusinessDetailActivity, it ?: emptyList())
                 binding.viewPager.adapter = viewPagerAdapter
