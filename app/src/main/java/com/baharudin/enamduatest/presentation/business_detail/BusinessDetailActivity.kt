@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -42,7 +43,6 @@ class BusinessDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupAdapterReview()
-        //setupAdapterImage()
         observer()
         getDataBusiness()
 
@@ -53,7 +53,6 @@ class BusinessDetailActivity : AppCompatActivity() {
         observeDetail()
         observeReview()
     }
-
 
     private fun setupAdapterReview(){
         val reviewAdapter = ReviewAdapter(mutableListOf())
@@ -68,18 +67,6 @@ class BusinessDetailActivity : AppCompatActivity() {
         viewModel.getBusinessById(id)
         viewModel.getReview(id)
     }
-
-//    private fun setupAdapterImage(){
-//        Log.d("PHOTOSSS", "1")
-//        imagesModel?.photos?.let {
-//            Log.d("PHOTOSSS", "$it")
-//            viewPagerAdapter = ImageSliderAdapter(this, it)
-//            binding.viewPager.adapter = viewPagerAdapter
-//            indicator = this.findViewById(R.id.indicator) as CircleIndicator
-//            indicator.setViewPager(binding.viewPager)
-//        }
-//    }
-
 
     private fun observeState(){
         viewModel.state
@@ -120,7 +107,7 @@ class BusinessDetailActivity : AppCompatActivity() {
         when(state){
             is DetailBusinessState.Init -> Unit
             is DetailBusinessState.ShowToast -> this.showToast(state.message)
-           // is DetailBusinessState.IsLoading -> handleLoading(state.isLoading)
+            is DetailBusinessState.IsLoading -> handleLoading(state.isLoading)
             else -> {}
         }
     }
@@ -131,6 +118,7 @@ class BusinessDetailActivity : AppCompatActivity() {
             tvName.text = businessDetail?.name ?: "Empty"
             tvPhone.text = businessDetail?.phone ?: "021+++"
             tvRating.text = businessDetail?.rating.toString() ?: "0"
+            tvCount.text = businessDetail?.review_count.toString()
             businessDetail?.photos.let {
                 viewPagerAdapter = ImageSliderAdapter(this@BusinessDetailActivity, it ?: emptyList())
                 binding.viewPager.adapter = viewPagerAdapter
@@ -143,6 +131,14 @@ class BusinessDetailActivity : AppCompatActivity() {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
                 startActivity(intent)
             }
+        }
+    }
+
+    private fun handleLoading(isLoading : Boolean){
+        if (isLoading){
+            binding.progressBar.visibility = View.VISIBLE
+        }else{
+            binding.progressBar.visibility = View.GONE
         }
     }
 

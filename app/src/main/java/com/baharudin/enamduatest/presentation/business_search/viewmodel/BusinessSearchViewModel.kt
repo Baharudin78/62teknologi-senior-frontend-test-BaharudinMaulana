@@ -56,9 +56,7 @@ class BusinessSearchViewModel @Inject constructor(
                             hideLoading()
                             showToast(result.message.orEmpty())
                         }
-                        else -> {
-
-                        }
+                        else -> {}
                     }
                 }
         }

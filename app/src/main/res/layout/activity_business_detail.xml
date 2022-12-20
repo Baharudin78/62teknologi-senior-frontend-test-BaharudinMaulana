@@ -57,6 +57,8 @@
         app:layout_constraintTop_toBottomOf="@+id/indicator"
         tools:text="Bahrifnf" />
 
+
+
     <TextView
         android:id="@+id/tv_alias"
         android:layout_width="wrap_content"
@@ -98,7 +100,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_price"
+        android:id="@+id/tv_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -120,7 +122,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_price"
+        app:layout_constraintTop_toBottomOf="@+id/tv_count"
         tools:text="Bahrifnf" />
 
         <com.google.android.material.button.MaterialButton
@@ -156,6 +158,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvrev" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/view_pager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view_pager" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
